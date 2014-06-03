@@ -1,11 +1,3 @@
---=============================================================================--
---  ___  ___   _   _   _    __   _   ___ ___ __ __
--- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ / 
---  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2010
---										 
---=============================================================================--
-
 g_ServerName	= ""
 g_MapName		= ""
 g_ServerURL		= ""
@@ -241,7 +233,7 @@ end
 
 function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
 
-	if ( engine.IsPlayingDemo() ) then return end
+	if engine.IsPlayingDemo() then return end
 
 	g_ServerName	= servername
 	g_MapName		= mapname
