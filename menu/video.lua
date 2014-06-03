@@ -1,25 +1,19 @@
---[[__                                       _     
- / _| __ _  ___ ___ _ __  _   _ _ __   ___| |__  
-| |_ / _` |/ __/ _ \ '_ \| | | | '_ \ / __| '_ \ 
-|  _| (_| | (_|  __/ |_) | |_| | | | | (__| | | |
-|_|  \__,_|\___\___| .__/ \__,_|_| |_|\___|_| |_|
-                   |_| 2012 --]]
-                   
-vid_width	= CreateConVar( "vid_width",	"640", { FCVAR_ARCHIVE } )
-vid_fps		= CreateConVar( "vid_fps",		"30", { FCVAR_ARCHIVE } )
+vid_width	= CreateConVar("vid_width", "640", {FCVAR_ARCHIVE})
+vid_fps		= CreateConVar("vid_fps", "30", {FCVAR_ARCHIVE})
 
-concommand.Add( "gm_video", function()
+concommand.Add("gm_video", function()
 
-	if ( ActiveVideo ) then
-	
+	if ActiveVideo then
 		ActiveVideo:Finish()
 		ActiveVideo = nil
 		return 
-		
 	end
 
-	local dynamic_name = game.GetMap() .." ".. util.DateStamp()
-
+	local dynamic_name = game.GetMap().." "..util.DateStamp()
+	
+	local width = vid_width:GetFloat()
+	local fps = vid_fps:GetFloat()
+	
 	ActiveVideo, error = video.Record( 
 	{
 		name		= dynamic_name,
@@ -28,27 +22,22 @@ concommand.Add( "gm_video", function()
 		audio		= "vorbis",
 		quality		= 0,
 		bitrate		= 1024 * 64,
-		width		= vid_width:GetFloat(),
-		height		= ScrH() * (vid_width:GetFloat() / ScrW()),
-		fps			= vid_fps:GetFloat(),
+		width		= width,
+		height		= ScrH() * (width / ScrW()),
+		fps			= fps,
 		lockfps		= true
 		
 	});
 	
-	if ( !ActiveVideo ) then
-	
-		MsgN( "Couldn't record video: ", error )
+	if not ActiveVideo then
+		MsgC(Color(0xFF, 0, 0), "[VideoRecord]") MsgC(Color(0xFF, 0xFF, 0xFF), "Couldn't record video: "..error)
 		return
-	
 	end
 
-end, nil, "", { FCVAR_DONTRECORD } )
+end, nil, "", {FCVAR_DONTRECORD})
 
 
-hook.Add( "DrawOverlay", "CaptureFrames", function()
-
-	if ( !ActiveVideo ) then return end
-	
-	ActiveVideo:AddFrame( FrameTime(), true );
-
-end )
+hook.Add("DrawOverlay", "CaptureFrames", function()
+	if not ActiveVideo then return end
+	ActiveVideo:AddFrame( FrameTime(), true )
+end)
