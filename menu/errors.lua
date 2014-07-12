@@ -3,7 +3,7 @@ local Errors = {}
 local matAlert = Material("icon16/error.png")
 
 local surface_SetFont, surface_SetTextColor, surface_SetTextPos, surface_DrawText = surface.SetFont, surface.SetTextColor, surface.SetTextPos, surface.DrawText
-local surface_SetDrawColor, surface_SetMaterial, surface_DrawTexturedRect, surface.GetTextSize = surface.SetDrawColor, surface.SetMaterial, surface.DrawTexturedRect, surface.GetTextSize
+local surface_SetDrawColor, surface_SetMaterial, surface_DrawTexturedRect, surface_GetTextSize = surface.SetDrawColor, surface.SetMaterial, surface.DrawTexturedRect, surface.GetTextSize
 
 local Color, SysTime = Color, SysTime
 
@@ -39,7 +39,7 @@ hook.Add("OnLuaError", "MenuErrorHandler", function(str, realm, addontitle, addo
 		last	= ST,
 		times	= 1,
 		title	= addontitle,
-		x		= 32,
+		x	= 32,
 		text	= text
 	}
 
